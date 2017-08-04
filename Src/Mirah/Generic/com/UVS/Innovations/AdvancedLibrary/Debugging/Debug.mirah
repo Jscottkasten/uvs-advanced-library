@@ -28,7 +28,11 @@ package com.UVS.Innovations.AdvancedLibrary.Debugging
 
 #
 # Std library support.
-# 
+#
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStreamWriter
+
 import java.lang.String
 import java.lang.StringBuilder
 import java.util.ArrayList
@@ -144,6 +148,19 @@ class Debug
     return array
   ensure
     @@debug_lock.unlock
+  end
+
+  def self.dump_to_file (file:File):void
+    fos = FileOutputStream.new(file)
+    osw = OutputStreamWriter.new(fos, "UTF-8")
+    msg = self.dump_to_array
+
+    msg.each do |line:String|
+      osw.write line
+      osw.write "\n"
+    end
+
+    osw.close
   end
 
   def self.is_enabled:boolean

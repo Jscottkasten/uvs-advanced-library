@@ -33,15 +33,9 @@ import android.util.Log
 
 #
 # Std library support.
-# 
-import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStreamWriter
-
+#
 import java.lang.String
 import java.lang.StringBuilder
-import java.util.ArrayList
-import java.util.HashMap
 
 import java.util.concurrent.locks.ReentrantLock
 
@@ -102,19 +96,6 @@ class AppDebug < Debug
   def self.v (msg_:StringBuilder):void
     msg = msg_.toString()
     Log.v(@@tag, msg) if Debug.v msg
-  end
-
-  def self.dump_to_file (file:File):void
-    fos = FileOutputStream.new(file)
-    osw = OutputStreamWriter.new(fos, "UTF-8")
-    msg = self.dump_to_array
-
-    msg.each do |line:String|
-      osw.write line
-      osw.write "\n"
-    end
-
-    osw.close
   end
 
 end # Class
