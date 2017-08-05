@@ -54,20 +54,15 @@ import com.UVS.Innovations.AdvancedLibrary.InputValidation.ParameterRangeExcepti
 # our individual application settings.
 #
 class SettingsStore < ParameterDefaults
+  attr_reader read_only:boolean
+
   #
   # Boiler plate for the ParameterDefaults
   # base from which we are derived.
   #
 
   def self.defaults:HashMap
-    array = ParameterDefaults.defaults
-
-    array.putAll({
-      "input_encoding"  => "UTF-8",
-      "output_encoding" => "UTF-8"
-    })
-
-    return array
+    return SettingsStore.defaults
   end
 
   protected def disperse_parms:HashMap
@@ -77,29 +72,48 @@ class SettingsStore < ParameterDefaults
     # NOTE: We pass the singleton's copy up the call stack.
     @parms     = @singleton.settings
 
-    # Attempt to load it, what ever that
-    # means to the derived class.
-    begin
-      @singleton.lock
-      self.reload unless @singleton.loaded
-    ensure
-      @singleton.unlock
-    end
-
     return @parms
   end
 
-  #
-  # Class specific methods.
-  #
-  protected def reload:void
-    # Mark the singleton as complete.
-    @singleton.loaded = true
+  def initialize
+    super
   end
 
-  protected def read_only= (state:boolean):void
-    @singleton.read_only = state
+  def initialize (parms:HashMap)
+    super parms
   end
+
+  #
+  # Allows us to protect this accessor of
+  # the singleton separately from other
+  # accessors, I.E. may not have the context
+  # from which to actually save data in
+  # that thread.
+  #
+
+  protected def read_only= (state:boolean):void
+    @read_only = state
+  end
+
+  def is_loaded:boolean
+    return @singleton.is_loaded
+  end
+
+  protected def is_loaded= (state:boolean):void
+    @singleton.is_loaded = state
+  end
+
+  protected def lock:void
+    @singleton.lock
+  end
+
+  protected def unlock:void
+    @singleton.unlock
+  end
+
+  #
+  # General data element access methods.
+  #
 
   def get (key:String):String
     @singleton.lock
@@ -110,7 +124,7 @@ class SettingsStore < ParameterDefaults
 
   def set (key:String, value:String):void
     @singleton.lock
-    raise SettingsStoreReadOnlyException if @singleton.read_only
+    raise SettingsStoreReadOnlyException if @read_only
     @parms[key] = value
   ensure
     @singleton.unlock

@@ -98,6 +98,16 @@ class ParameterValidator < ParameterDefaults
     return @parms
   end
 
+  # Boiler plate.
+  def initialize
+    super
+  end
+
+  # Boiler plate.
+  def initialize (parms:HashMap)
+    super parms
+  end
+
   #
   # Class specific methods.
   #

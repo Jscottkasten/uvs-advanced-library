@@ -30,53 +30,27 @@ package com.UVS.Innovations.AdvancedLibrary.Settings
 # Std library support.
 #
 import java.lang.String
-import java.util.HashMap
 
-import java.util.concurrent.locks.ReentrantLock
+#
+# Exceptions.
+#
+import java.lang.Exception
 
 
 
 
 #####
 #
-# The application sould use the SettingsStore outer
-# class as its interface.  This class is internal.
-# It is a singleton that just holds the raw data
-# with no access protection, nor access to storage.
-# The outer class handles all that.  This class
-# does ensure that no matter how many threads the
-# application has, or how many references are
-# made to the settings object, that there is one
-# and only one shared instance.
+# Custom exception class.
 #
-class SettingsStoreSingleton
-  @@singleton      = SettingsStoreSingleton(nil)
-  @@singleton_lock = ReentrantLock.new
+class SettingsStoreNotLoadedException < Exception
 
-  attr_accessor settings:HashMap,
-                is_loaded:boolean
-
-  def initialize (defaults:HashMap)
-    @settings  = HashMap.new
-    @settings.putAll defaults
-    @is_loaded = false
+  def initialize
+    super
   end
 
-  def self.get_reference (defaults:HashMap):SettingsStoreSingleton
-    @@singleton_lock.lock
-    @@singleton = SettingsStoreSingleton.new defaults
-     
-    return @@singleton
-  ensure
-    @@singleton_lock.unlock
-  end
-
-  def lock
-    @@singleton_lock.lock
-  end
-
-  def unlock
-    @@singleton_lock.unlock
+  def initialize (msg:String)
+    super msg
   end
 
 end # class
