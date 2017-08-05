@@ -73,23 +73,23 @@ class AppExceptionHandler
   def initialize (act:Activity)
     @old_handler  = UncaughtExceptionHandler(nil)
     @pass_through = false
-    @ctx          = act.getApplicationContext()
+    @ctx          = act.getApplicationContext
     @act          = act
   end
 
   def initialize (ctx:Context)
     @old_handler  = UncaughtExceptionHandler(nil)
     @pass_through = false
-    @ctx          = ctx.getApplicationContext()
+    @ctx          = ctx.getApplicationContext
   end
 
   def install:void
-    @old_handler = Thread.getDefaultUncaughtExceptionHandler()
-    Thread.setDefaultUncaughtExceptionHandler(self)
+    @old_handler = Thread.getDefaultUncaughtExceptionHandler
+    Thread.setDefaultUncaughtExceptionHandler self
   end
 
   def remove:void
-    Thread.setDefaultUncaughtExceptionHandler(@old_handler) if @old_handler
+    Thread.setDefaultUncaughtExceptionHandler @old_handler   if @old_handler
   end
 
   #
@@ -99,27 +99,27 @@ class AppExceptionHandler
   def uncaughtException (thd:Thread, exc:Throwable):void
     # Find the original error.
     cause = exc
-    while cause.getCause()
-      cause = cause.getCause()
+    while cause.getCause
+      cause = cause.getCause
     end
 
     # Format the stack dump into a message string array.
-    msg = ArrayList.new()
+    msg = ArrayList.new
 
-    msg.add("Caught an error:")
-    msg.add("    " + cause.toString())
-#    msg.add(cause.getMessage())
-    msg.add("")
-    msg.add("Stack trace follows:")
+    msg.add "Caught an error:"
+    msg.add "    " + cause.toString
+#    msg.add cause.getMessage
+    msg.add ""
+    msg.add "Stack trace follows:"
 
-    stack = cause.getStackTrace()
+    stack = cause.getStackTrace
 
     stack.each do |element:StackTraceElement|
       msg.add(
-        "    "  + element.getFileName()   +
-        ":"     + element.getLineNumber() +
-        "  -  " + element.getMethodName() +
-        (element.isNativeMethod() ? " (native code)" : "")
+        "    "  + element.getFileName   +
+        ":"     + element.getLineNumber +
+        "  -  " + element.getMethodName +
+        (element.isNativeMethod ? " (native code)" : "")
       )
     end
 
@@ -135,7 +135,7 @@ class AppExceptionHandler
     # helps flush the buffer.  There does not
     # seem to be an actual method to do so.
     begin
-      Thread.sleep(500)
+      Thread.sleep 500
     rescue Exception => exc
     end
 
@@ -148,27 +148,27 @@ class AppExceptionHandler
     end
 
     # Launch our exception activity.
-    hand_ui = Intent.new(@ctx, AppExceptionHandlerActivity.class())
-    hand_ui.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    hand_ui.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-    hand_ui.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-    hand_ui.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
-    hand_ui.addFlags(Intent.FLAG_FROM_BACKGROUND) unless @act
-    hand_ui.putStringArrayListExtra(AppExceptionHandlerActivity.EXCEPTION_KEY, msg)
-    hand_ui.putExtra(AppExceptionHandlerActivity.EMAIL_ADDR_KEY, @email_addr) if @email_addr
-    hand_ui.putExtra(AppExceptionHandlerActivity.EMAIL_SUBJ_KEY, @email_subj) if @email_subj
-    hand_ui.putExtra(AppExceptionHandlerActivity.EMAIL_TEXT_KEY, @email_text) if @email_text
-    @ctx.startActivity(hand_ui)
+    hand_ui = Intent.new @ctx, AppExceptionHandlerActivity.class
+    hand_ui.addFlags Intent.FLAG_ACTIVITY_NEW_TASK 
+    hand_ui.addFlags Intent.FLAG_ACTIVITY_SINGLE_TOP
+    hand_ui.addFlags Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+    hand_ui.addFlags Intent.FLAG_ACTIVITY_NO_HISTORY
+    hand_ui.addFlags Intent.FLAG_FROM_BACKGROUND   unless @act
+    hand_ui.putStringArrayListExtra AppExceptionHandlerActivity.EXCEPTION_KEY, msg
+    hand_ui.putExtra AppExceptionHandlerActivity.EMAIL_ADDR_KEY, @email_addr   if @email_addr
+    hand_ui.putExtra AppExceptionHandlerActivity.EMAIL_SUBJ_KEY, @email_subj   if @email_subj
+    hand_ui.putExtra AppExceptionHandlerActivity.EMAIL_TEXT_KEY, @email_text   if @email_text
+    @ctx.startActivity hand_ui 
 
     # Pass through.
     if @pass_through and @old_handler
-      @old_handler.uncaughtException(thd, exc)
+      @old_handler.uncaughtException thd, exc
     else
       # Removes the activity from the back stack.
-      @act.finish() if @act
+      @act.finish if @act
 
       # Terminate the thread so the UI isn't hung.
-      System.exit(2)
+      System.exit 2
     end
   end
 

@@ -72,6 +72,11 @@ class ParameterValidator < ParameterDefaults
     # We don't really need to add anything
     # for this class, so just pass it on up.
 
+    # Even if a derived class doesn't need
+    # this, it is best to implement a stub
+    # like this due to the way Java handles
+    # class methods.
+
     return array
   end
 
@@ -80,17 +85,17 @@ class ParameterValidator < ParameterDefaults
 
     # No local parameters to disperse.
 
+    # Even if you don't want to disperse
+    # local parameters, you should still
+    # implement a stub like this in your
+    # derived class for the simple reason
+    # that your derived @parms is NOT the
+    # same as this class's @parms.  I.E.
+    # @parms is NOT inherited.  It is only
+    # this design pattern the links all
+    # the @parms to the same reference.
+
     return @parms
-  end
-
-  # Leave this alone.
-  def initialize
-    super
-  end
-
-  # Leave this alone.
-  def initialize (parms:HashMap)
-    super parms
   end
 
   #

@@ -39,8 +39,19 @@ class MySpecialClass < ParameterValidator
   #
   # What is returned at the top level is a
   # completely filled table of defaults.
-  def DEFAULTS:HashMap
-    defaults  = super
+  #
+  # It should be noted that this is a class
+  # function, and Java DOES NOT provide a
+  # "this" pointer for class functions to call
+  # the parent's version.  Thus you must
+  # explicitly chain them as shown immediately
+  # below.  This is a JVM limitation, not
+  # a problem with mirah.
+  #
+  def self.defaults:HashMap
+    # NOTE: Modify this to call the immediate
+    # parent class's defaults function.
+    defaults  = ParameterValidator.defaults
 
     # Add your default values as strings here.
     # Don't touch anything else.
@@ -59,6 +70,19 @@ class MySpecialClass < ParameterValidator
   # correct data types.  The validation module
   # will take care of range checking, type
   # checking, etc.
+  #
+  # Even if you don't have anything to disperse,
+  # you should implement this because @parms
+  # IS NOT shared between the different layers
+  # of the class inheritance chain.  Your
+  # @parms is not related in any way to the
+  # same in the base class.  It is a LOCAL
+  # reference.  However, it is fine for each
+  # of these references to point at the same
+  # object, which is the major point of
+  # the disperse function chaining through
+  # all the layers of inherited stuff.
+  #
   private def disperse_parms:HashMap
     @parms           = super
 
@@ -75,6 +99,10 @@ class MySpecialClass < ParameterValidator
 
   # These two init functions are the only ones you
   # need and should not be modified in any way.
+  #
+  # IN FACT: It is better to just omit them entirely
+  # and inherit the ones from the parent as it
+  # is guaraneteed to do the right thing.
   #
   # Put you real initialization in the disperse
   # function above where it will have full access
@@ -96,13 +124,13 @@ class MySpecialClass < ParameterValidator
   #
   # TcpSocket.new {"ip_addr" => "192.168.2.1", "port" => "2332" }
   #
-  def initialize
-    super
-  end
+#  def initialize
+#    super
+#  end
 
-  def initialize (parms:HashMap)
-    super parms
-  end
+#  def initialize (parms:HashMap)
+#    super parms
+#  end
 
   #
   # My own functions go here.
