@@ -11,9 +11,10 @@ JAVA_OPTIONS    = -Xmx64m
 
 # Don't touch these.
 ANDROID_JAR     = $(ANDROID_HOME)/platforms/android-$(BUILD_ID)/android.jar
+ANDROID_V4_JAR  = $(ANDROID_HOME)/extras/android/support/v4/android-support-v4.jar
 SOURCES         = ./Src/Mirah/Android/.
 DESTINATION     = ./Bin/Classes
-CLASSPATH       = $(DESTINTION):$(ANDROID_JAR)
+CLASSPATH       = $(DESTINTION):$(ANDROID_JAR):$(ANDROID_V4_JAR)
 
 
 all : dist
