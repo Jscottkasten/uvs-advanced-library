@@ -24,62 +24,33 @@
 #                                                                                 #
 ###################################################################################
 
-package com.UVS.Innovations.AdvancedLibrary.InputValidation
+package com.UVS.Innovations.AdvancedLibrary.Settings
 
 #
 # Std library support.
 #
-import java.lang.Class
 import java.lang.String
-import java.util.HashMap
+
+#
+# Exceptions.
+#
+import java.lang.Exception
 
 
 
 
 #####
 #
-# Class for simplified function parameters and
-# default initializers handling.
+# Custom exception class.
 #
-class ParameterDefaults
+class SettingsStoreReadOnlyException < Exception
 
-  attr_reader tag:String
-
-  def self.defaults:HashMap
-    # No defaults here, but needed for derived classes.
-    # This is where the defaults array originates.
-    return HashMap.new
-  end
-
-  protected def disperse_parms:HashMap
-    # This is useful for debugging as all derived classes
-    # are tagged with their actual names which can be
-    # used in debug output.
-    temp      = self.getClass.getName
-    @tag      = temp.substring ((temp.lastIndexOf ".") + 1)
-
-    # By default, we just pass the parameters up
-    # the call stack to each layer of derived
-    # classes.
-    return @parms
-  end
-
-  # This is where we construct the array of
-  # defaults, then override it with the input
-  # parameters one by one.
   def initialize
-    @parms = self.defaults
-    self.disperse_parms
+    super
   end
 
-  def initialize (parms:HashMap)
-    filter    = self.defaults
-    filter.keySet.each do |key|
-      filter[key] = parms[key] if parms.containsKey(key)
-    end
-    @parms    = filter
-
-    self.disperse_parms
+  def initialize (msg:String)
+    super msg
   end
 
-end # Class
+end # class

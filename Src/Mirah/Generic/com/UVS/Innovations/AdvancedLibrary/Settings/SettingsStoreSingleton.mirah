@@ -24,62 +24,61 @@
 #                                                                                 #
 ###################################################################################
 
-package com.UVS.Innovations.AdvancedLibrary.InputValidation
+package com.UVS.Innovations.AdvancedLibrary.Settings
 
 #
 # Std library support.
 #
-import java.lang.Class
 import java.lang.String
 import java.util.HashMap
+
+import java.util.concurrent.locks.ReentrantLock
 
 
 
 
 #####
 #
-# Class for simplified function parameters and
-# default initializers handling.
+# The application sould use the SettingsStore outer
+# class as its interface.  This class is internal.
+# It is a singleton that just holds the raw data
+# with no access protection, nor access to storage.
+# The outer class handles all that.  This class
+# does ensure that no matter how many threads the
+# application has, or how many references are
+# made to the settings object, that there is one
+# and only one shared instance.
 #
-class ParameterDefaults
+class SettingsStoreSingleton
+  @@singleton      = SettingsStoreSingleton(nil)
+  @@singleton_lock = ReentrantLock.new
 
-  attr_reader tag:String
+  attr_accessor settings:HashMap,
+                loaded:boolean,
+                read_only:boolean
 
-  def self.defaults:HashMap
-    # No defaults here, but needed for derived classes.
-    # This is where the defaults array originates.
-    return HashMap.new
+  def initialize (defaults:HashMap)
+    @settings  = HashMap.new
+    @settings.putAll defaults
+    @loaded    = false
+    @read_only = false
   end
 
-  protected def disperse_parms:HashMap
-    # This is useful for debugging as all derived classes
-    # are tagged with their actual names which can be
-    # used in debug output.
-    temp      = self.getClass.getName
-    @tag      = temp.substring ((temp.lastIndexOf ".") + 1)
-
-    # By default, we just pass the parameters up
-    # the call stack to each layer of derived
-    # classes.
-    return @parms
+  def self.get_reference (defaults:HashMap):SettingsStoreSingleton
+    @@singleton_lock.lock
+    @@singleton = SettingsStoreSingleton.new defaults
+     
+    return @@singleton
+  ensure
+    @@singleton_lock.unlock
   end
 
-  # This is where we construct the array of
-  # defaults, then override it with the input
-  # parameters one by one.
-  def initialize
-    @parms = self.defaults
-    self.disperse_parms
+  def lock
+    @@singleton_lock.lock
   end
 
-  def initialize (parms:HashMap)
-    filter    = self.defaults
-    filter.keySet.each do |key|
-      filter[key] = parms[key] if parms.containsKey(key)
-    end
-    @parms    = filter
-
-    self.disperse_parms
+  def unlock
+    @@singleton_lock.unlock
   end
 
-end # Class
+end # class
