@@ -1,32 +1,11 @@
-###################################################################################
-# Copyright (C) 2015, 2016, 2017 by UVS Innovations Corporation.                  #
-# All rights reserved.                                                            #
-#                                                                                 #
-# Redistribution and use in source and binary forms, with or without              #
-# modification, are permitted provided that the following conditions are met:     #
-#                                                                                 #
-# 1. Redistributions of source code must retain the above copyright notice, this  #
-#    list of conditions and the following disclaimer.                             #
-# 2. Redistributions in binary form must reproduce the above copyright notice,    #
-#    this list of conditions and the following disclaimer in the documentation    #
-#    and/or other materials provided with the distribution.                       #
-#                                                                                 #
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND #
-# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED   #
-# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE          #
-# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR #
-# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES  #
-# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;    #
-# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND     #
-# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      #
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS   #
-# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                    #
-#                                                                                 #
-###################################################################################
+NOTE: The license for this code is provided in the top level file LICENSE.txt.
+
+SUBJECT: Using the ParameterValidator and ParameterDefaults classes as bases
+         for your own constructs.
 
 Many of the UVS classes that are useful as bases for your own derived classes
 support "parameter magic" which allows you to decode complex function parameters
-in trivalally by adding simple boiler plater to your own function.
+trivalally by adding simple boiler plater to your own function.
 
 class MySpecialClass < ParameterValidator
 
@@ -100,11 +79,7 @@ class MySpecialClass < ParameterValidator
   # These two init functions are the only ones you
   # need and should not be modified in any way.
   #
-  # IN FACT: It is better to just omit them entirely
-  # and inherit the ones from the parent as it
-  # is guaraneteed to do the right thing.
-  #
-  # Put you real initialization in the disperse
+  # Put your real initialization in the disperse
   # function above where it will have full access
   # to the defaults and input parameters after
   # it has been inspected by all layers of parent
@@ -124,13 +99,13 @@ class MySpecialClass < ParameterValidator
   #
   # TcpSocket.new {"ip_addr" => "192.168.2.1", "port" => "2332" }
   #
-#  def initialize
-#    super
-#  end
+  def initialize
+    super
+  end
 
-#  def initialize (parms:HashMap)
-#    super parms
-#  end
+  def initialize (parms:HashMap)
+    super parms
+  end
 
   #
   # My own functions go here.
