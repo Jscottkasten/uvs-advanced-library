@@ -98,4 +98,12 @@ class AppDebug < Debug
     Log.v(@@tag, msg) if Debug.v msg
   end
 
+  def self.tag:String
+    return @@tag
+  end
+
+  def self.tag= (tag:String):void
+    @@tag = tag
+  end
+
 end # Class
