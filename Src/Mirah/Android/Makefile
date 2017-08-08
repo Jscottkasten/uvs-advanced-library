@@ -14,7 +14,9 @@ ANDROID_JAR     = $(ANDROID_HOME)/platforms/android-$(BUILD_ID)/android.jar
 ANDROID_V4_JAR  = $(ANDROID_HOME)/extras/android/support/v4/android-support-v4.jar
 SOURCES         = ./Src/Mirah/Android/.
 DESTINATION     = ./Bin/Classes
+DISTRIBUTABLES  = ./Distributables/Android
 CLASSPATH       = $(DESTINTION):$(ANDROID_JAR):$(ANDROID_V4_JAR)
+TARGET_LIB      = UVS-Android-AdvancedLibrary.jar
 
 
 all : dist
@@ -22,6 +24,7 @@ all : dist
 .PHONY : debug clean dist
 
 clean :
+	-[ -d $(DESTINATION) ] || mkdir --parents $(DESTINATION)
 	-rm -rf log Bin/Classes/*
 
 debug : clean
@@ -31,5 +34,6 @@ debug : clean
 	less log
 
 dist : debug
-	-rm -rf Distributables/Android/UVS-Android-AdvancedLibrary.jar
-	-jar -cvf Distributables/Android/UVS-Android-AdvancedLibrary.jar -C Bin/Classes com
+	-[ -d $(DISTRIBUTABLES) ] || mkdir --parents $(DISTRIBUTABLES)
+	-[ -f $(DISTRIBUTABLES)/$(TARGET_LIB) ] && rm -rf $(DISTRIBUTABLES)/$(TARGET_LIB)
+	-jar -cvf $(DISTRIBUTABLES)/$(TARGET_LIB) -C $(DESTINATION) com

@@ -87,28 +87,11 @@ class AppSettingsStore < SettingsStore
     super
   end
 
-  # Boiler plate.
-  def initialize (parms:HashMap)
+  # Here, we do some extra setup after the
+  # boiler plate super call.
+  def initialize (ctx:Context, parms:HashMap)
     super parms
-  end
 
-  # Slightly modified initializer to be
-  # used by Activities and Services.
-  def self.get_reference (ctx:Context):AppSettingsStore
-    ass = AppSettingsStore.new
-    ass.set_context ctx
-    return ass
-  end
-
-  # Slightly modified initializer to be
-  # used by Activities and Services.
-  def self.get_reference (ctx:Context, parms:HashMap):AppSettingsStore
-    ass = AppSettingsStore.new parms
-    ass.set_context ctx
-    return ass
-  end
-
-  private def set_context (ctx:Context):void
     @ctx   = ctx.getApplicationContext
     @prefs = PreferenceManager.getDefaultSharedPreferences @ctx
 
