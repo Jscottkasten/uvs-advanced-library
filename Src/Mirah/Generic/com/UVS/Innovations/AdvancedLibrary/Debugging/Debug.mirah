@@ -112,7 +112,7 @@ class Debug
   #private
   def self.add_to_ring_buffer (msg:String, level:int):boolean
     return false unless @@is_enabled
-    return false unless level >= @@debug_level
+    return false unless level <= @@debug_level
 
     begin
       @@debug_lock.lock
