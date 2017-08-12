@@ -202,4 +202,12 @@ class Debug
     end
   end
 
+  def self.level= (level:int):void
+    @@debug_level = level
+  end
+
+  def self.level:int
+    @@debug_level
+  end
+
 end # class
