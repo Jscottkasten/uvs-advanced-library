@@ -33,7 +33,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 #
 # Std library support.
@@ -73,7 +72,8 @@ class AppSettingsStore < SettingsStore
   end
 
   # Boiler plate.
-  protected def disperse_parms:HashMap
+  #protected
+  def disperse_parms:HashMap
     @parms = super
 
     # Default to read only status.
@@ -105,7 +105,8 @@ class AppSettingsStore < SettingsStore
   # initialized value is saved back to the storage.
   # The final value is stored in the settings singleton
   # so all threads see the same data.
-  protected def reload:void
+  #protected
+  def reload:void
     self.lock
     return if self.is_loaded
 

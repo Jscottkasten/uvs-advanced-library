@@ -88,7 +88,8 @@ class AppExceptionHandlerActivity < android.support.v4.app.FragmentActivity
   EMAIL_SUBJ_KEY = "com.UVS.Innovations.AdvancedLibrary.Debugging.EMAIL_SUBJECT_KEY"
   EMAIL_TEXT_KEY = "com.UVS.Innovations.AdvancedLibrary.Debugging.EMAIL_TEXT_KEY"
 
-  protected def onCreate (state:Bundle):void
+  #protected
+  def onCreate (state:Bundle):void
     super state
 
     # Recover node info.

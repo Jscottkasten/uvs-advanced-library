@@ -51,7 +51,8 @@ class ParameterDefaults
     return HashMap.new
   end
 
-  protected def disperse_parms:HashMap
+  #protected
+  def disperse_parms:HashMap
     # This is useful for debugging as all derived classes
     # are tagged with their actual names which can be
     # used in debug output.

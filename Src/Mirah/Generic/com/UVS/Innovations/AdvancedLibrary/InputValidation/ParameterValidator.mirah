@@ -80,7 +80,8 @@ class ParameterValidator < ParameterDefaults
     return array
   end
 
-  protected def disperse_parms:HashMap
+  #protected
+  def disperse_parms:HashMap
     @parms = super
 
     # No local parameters to disperse.

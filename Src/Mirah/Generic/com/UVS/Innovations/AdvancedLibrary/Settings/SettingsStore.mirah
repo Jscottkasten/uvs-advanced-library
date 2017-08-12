@@ -65,7 +65,8 @@ class SettingsStore < ParameterDefaults
     return SettingsStore.defaults
   end
 
-  protected def disperse_parms:HashMap
+  #protected
+  def disperse_parms:HashMap
     @parms     = super
     @singleton = SettingsStoreSingleton.get_reference @parms
 
@@ -91,7 +92,8 @@ class SettingsStore < ParameterDefaults
   # that thread.
   #
 
-  protected def read_only= (state:boolean):void
+  #protected
+  def read_only= (state:boolean):void
     @read_only = state
   end
 
@@ -99,15 +101,18 @@ class SettingsStore < ParameterDefaults
     return @singleton.is_loaded
   end
 
-  protected def is_loaded= (state:boolean):void
+  #protected
+  def is_loaded= (state:boolean):void
     @singleton.is_loaded = state
   end
 
-  protected def lock:void
+  #protected
+  def lock:void
     @singleton.lock
   end
 
-  protected def unlock:void
+  #protected
+  def unlock:void
     @singleton.unlock
   end
 
