@@ -49,11 +49,11 @@ import java.util.concurrent.locks.ReentrantLock
 class Debug
   DEFAULT_MAX_MSG_QUEUE = 100
 
-  LEVEL_ERROR     = 0
-  LEVEL_WARNING   = 1
-  LEVEL_INFO      = 2
-  LEVEL_DEBUG     = 3
-  LEVEL_VERBOSE   = 4
+  def self.LEVEL_ERROR:int;   return 0; end
+  def self.LEVEL_WARNING:int; return 1; end
+  def self.LEVEL_INFO:int;    return 2; end
+  def self.LEVEL_DEBUG:int;   return 3; end
+  def self.LEVEL_VERBOSE:int; return 4; end
 
   @@max_msg_queue = DEFAULT_MAX_MSG_QUEUE # Number of crash lines to capture.
   @@debug_lock    = ReentrantLock.new
