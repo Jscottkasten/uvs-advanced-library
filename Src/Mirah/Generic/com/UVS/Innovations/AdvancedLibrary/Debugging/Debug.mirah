@@ -35,7 +35,7 @@ import java.io.OutputStreamWriter
 
 import java.lang.String
 import java.lang.StringBuilder
-import java.util.ArrayList
+import java.util.List
 
 import java.util.concurrent.locks.ReentrantLock
 
@@ -57,7 +57,7 @@ class Debug
 
   @@max_msg_queue = DEFAULT_MAX_MSG_QUEUE # Number of crash lines to capture.
   @@debug_lock    = ReentrantLock.new
-  @@msg_queue     = ArrayList(nil)
+  @@msg_queue     = List(nil)
   @@is_enabled    = false
   @@debug_level   = LEVEL_WARNING
 
@@ -116,8 +116,8 @@ class Debug
 
     begin
       @@debug_lock.lock
-      @@msg_queue = ArrayList.new unless @@msg_queue
-      @@msg_queue.remove  0         if   @@msg_queue.size >= @@max_msg_queue
+      @@msg_queue = []        unless @@msg_queue
+      @@msg_queue.remove  0     if   @@msg_queue.size >= @@max_msg_queue
       @@msg_queue.add msg
     ensure
       @@debug_lock.unlock
@@ -142,9 +142,9 @@ class Debug
     @@debug_lock.unlock
   end
 
-  def self.dump_to_array:ArrayList
+  def self.dump_to_array:List
     @@debug_lock.lock
-    array = ArrayList.new
+    array = []
     array.addAll @@msg_queue if @@msg_queue
     return array
   ensure
@@ -178,7 +178,7 @@ class Debug
 
   def self.clear:void
     @@debug_lock.lock
-    @@msg_queue = ArrayList(nil)
+    @@msg_queue = List(nil)
   ensure
     @@debug_lock.unlock
   end

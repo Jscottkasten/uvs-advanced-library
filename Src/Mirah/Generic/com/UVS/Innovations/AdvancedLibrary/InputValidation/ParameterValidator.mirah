@@ -42,7 +42,7 @@ import java.lang.Long
 import java.lang.Object
 import java.lang.String
 import java.util.ArrayList
-import java.util.HashMap
+import java.util.Map
 
 #
 # Exceptions.
@@ -66,7 +66,7 @@ class ParameterValidator < ParameterDefaults
 
   VALIDATOR_MAX_OFFSET_FIELD_LENGTH = 32
 
-  def self.defaults:HashMap
+  def self.defaults:Map
     array = ParameterDefaults.defaults
 
     # We don't really need to add anything
@@ -75,13 +75,13 @@ class ParameterValidator < ParameterDefaults
     # Even if a derived class doesn't need
     # this, it is best to implement a stub
     # like this due to the way Java handles
-    # class methods.
+    # static class methods.
 
     return array
   end
 
   #protected
-  def disperse_parms:HashMap
+  def disperse_parms:Map
     @parms = super
 
     # No local parameters to disperse.
@@ -105,7 +105,7 @@ class ParameterValidator < ParameterDefaults
   end
 
   # Boiler plate.
-  def initialize (parms:HashMap)
+  def initialize (parms:Map)
     super parms
   end
 

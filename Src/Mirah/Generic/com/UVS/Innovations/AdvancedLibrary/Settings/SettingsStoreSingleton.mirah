@@ -30,7 +30,7 @@ package com.UVS.Innovations.AdvancedLibrary.Settings
 # Std library support.
 #
 import java.lang.String
-import java.util.HashMap
+import java.util.Map
 
 import java.util.concurrent.locks.ReentrantLock
 
@@ -53,16 +53,16 @@ class SettingsStoreSingleton
   @@singleton      = SettingsStoreSingleton(nil)
   @@singleton_lock = ReentrantLock.new
 
-  attr_accessor settings:HashMap,
+  attr_accessor settings:Map,
                 is_loaded:boolean
 
-  def initialize (defaults:HashMap)
-    @settings  = HashMap.new
+  def initialize (defaults:Map)
+    @settings  = {}
     @settings.putAll defaults
     @is_loaded = false
   end
 
-  def self.get_reference (defaults:HashMap):SettingsStoreSingleton
+  def self.get_reference (defaults:Map):SettingsStoreSingleton
     @@singleton_lock.lock
     @@singleton = SettingsStoreSingleton.new defaults
      

@@ -34,7 +34,7 @@ import java.lang.Float
 import java.lang.Integer
 import java.lang.Long
 import java.lang.String
-import java.util.HashMap
+import java.util.Map
 
 import java.util.concurrent.locks.ReentrantLock
 
@@ -61,12 +61,12 @@ class SettingsStore < ParameterDefaults
   # base from which we are derived.
   #
 
-  def self.defaults:HashMap
+  def self.defaults:Map
     return SettingsStore.defaults
   end
 
   #protected
-  def disperse_parms:HashMap
+  def disperse_parms:Map
     @parms     = super
     @singleton = SettingsStoreSingleton.get_reference @parms
 
@@ -80,7 +80,7 @@ class SettingsStore < ParameterDefaults
     super
   end
 
-  def initialize (parms:HashMap)
+  def initialize (parms:Map)
     super parms
   end
 

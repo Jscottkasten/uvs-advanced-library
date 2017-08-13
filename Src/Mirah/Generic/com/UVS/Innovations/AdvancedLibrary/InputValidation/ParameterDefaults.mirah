@@ -31,7 +31,7 @@ package com.UVS.Innovations.AdvancedLibrary.InputValidation
 #
 import java.lang.Class
 import java.lang.String
-import java.util.HashMap
+import java.util.Map
 
 
 
@@ -45,14 +45,14 @@ class ParameterDefaults
 
   attr_reader tag:String
 
-  def self.defaults:HashMap
+  def self.defaults:Map
     # No defaults here, but needed for derived classes.
     # This is where the defaults array originates.
-    return HashMap.new
+    return {}
   end
 
   #protected
-  def disperse_parms:HashMap
+  def disperse_parms:Map
     # This is useful for debugging as all derived classes
     # are tagged with their actual names which can be
     # used in debug output.
@@ -73,7 +73,7 @@ class ParameterDefaults
     self.disperse_parms
   end
 
-  def initialize (parms:HashMap)
+  def initialize (parms:Map)
     filter    = self.defaults
     filter.keySet.each do |key|
       filter[key] = parms[key] if parms.containsKey(key)

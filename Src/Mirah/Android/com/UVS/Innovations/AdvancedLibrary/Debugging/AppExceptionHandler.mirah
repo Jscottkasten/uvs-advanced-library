@@ -36,10 +36,9 @@ import android.content.Intent
 #
 # Std library support.
 # 
-import java.lang.Object
 import java.lang.String
 import java.util.ArrayList
-import java.util.HashMap
+import java.util.Map
 import java.util.List
 
 #
@@ -104,7 +103,7 @@ class AppExceptionHandler
     end
 
     # Format the stack dump into a message string array.
-    msg = ArrayList.new
+    msg = []
 
     msg.add "Caught an error:"
     msg.add "    " + cause.toString
@@ -154,7 +153,7 @@ class AppExceptionHandler
     hand_ui.addFlags Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
     hand_ui.addFlags Intent.FLAG_ACTIVITY_NO_HISTORY
     hand_ui.addFlags Intent.FLAG_FROM_BACKGROUND   unless @act
-    hand_ui.putStringArrayListExtra AppExceptionHandlerActivity.EXCEPTION_KEY, msg
+    hand_ui.putStringArrayListExtra AppExceptionHandlerActivity.EXCEPTION_KEY, ArrayList(msg)
     hand_ui.putExtra AppExceptionHandlerActivity.EMAIL_ADDR_KEY, @email_addr   if @email_addr
     hand_ui.putExtra AppExceptionHandlerActivity.EMAIL_SUBJ_KEY, @email_subj   if @email_subj
     hand_ui.putExtra AppExceptionHandlerActivity.EMAIL_TEXT_KEY, @email_text   if @email_text

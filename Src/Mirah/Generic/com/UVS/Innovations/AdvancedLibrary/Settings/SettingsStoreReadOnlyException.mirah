@@ -29,12 +29,8 @@ package com.UVS.Innovations.AdvancedLibrary.Settings
 #
 # Std library support.
 #
-import java.lang.String
-
-#
-# Exceptions.
-#
 import java.lang.Exception
+import java.lang.String
 
 
 

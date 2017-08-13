@@ -39,7 +39,7 @@ import android.preference.PreferenceManager;
 #
 import java.lang.String;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.HashMap;
+import java.util.Map;
 
 import java.io.File;
 
@@ -52,7 +52,7 @@ import java.io.File;
 #
 class AppSettingsStore < SettingsStore
   # Boiler plate.
-  def self.defaults:HashMap
+  def self.defaults:Map
     array = SettingsStore.defaults
 
     # NOTE: In the derived class, even
@@ -73,7 +73,7 @@ class AppSettingsStore < SettingsStore
 
   # Boiler plate.
   #protected
-  def disperse_parms:HashMap
+  def disperse_parms:Map
     @parms = super
 
     # Default to read only status.
@@ -89,7 +89,7 @@ class AppSettingsStore < SettingsStore
 
   # Here, we do some extra setup after the
   # boiler plate super call.
-  def initialize (ctx:Context, parms:HashMap)
+  def initialize (ctx:Context, parms:Map)
     super parms
 
     @ctx   = ctx.getApplicationContext
