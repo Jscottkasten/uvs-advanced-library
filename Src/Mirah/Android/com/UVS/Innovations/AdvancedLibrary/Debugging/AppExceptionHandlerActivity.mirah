@@ -82,11 +82,10 @@ class AppExceptionHandlerActivity < android.support.v4.app.FragmentActivity
   DEFAULT_SUBJECT = "URGENT: User reported crash dump."
   DEFAULT_TEXT    = "\n\nPlease add comments about the crash here:\n\n"
 
-
-  EXCEPTION_KEY  = "com.UVS.Innovations.AdvancedLibrary.Debugging.AppExceptionHandlerActivity.EXCEPTION_KEY"
-  EMAIL_ADDR_KEY = "com.UVS.Innovations.AdvancedLibrary.Debugging.EMAIL_ADDRESS_KEY"
-  EMAIL_SUBJ_KEY = "com.UVS.Innovations.AdvancedLibrary.Debugging.EMAIL_SUBJECT_KEY"
-  EMAIL_TEXT_KEY = "com.UVS.Innovations.AdvancedLibrary.Debugging.EMAIL_TEXT_KEY"
+  def self.EXCEPTION_KEY:String; return "EXCEPTION_KEY"; end
+  def self.EMAIL_ADDR_KEY:String; return "EMAIL_ADDRESS_KEY"; end
+  def self.EMAIL_SUBJ_KEY:String; return "EMAIL_SUBJECT_KEY"; end
+  def self.EMAIL_TEXT_KEY:String; return "EMAIL_TEXT_KEY"; end
 
   #protected
   def onCreate (state:Bundle):void
@@ -142,7 +141,7 @@ class AppExceptionHandlerActivity < android.support.v4.app.FragmentActivity
         )
         content.addView text
 
-        @stack_dump.append line
+        @stack_dump.append line + "\n"
       end
     else
       text = TextView.new self
