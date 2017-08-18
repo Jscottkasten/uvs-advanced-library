@@ -51,6 +51,12 @@ import java.io.File;
 # our individual application settings.
 #
 class AppSettingsStore < SettingsStore
+
+    DEFAULTS = {
+                 "input_encoding"  => "UTF-8",
+                 "output_encoding" => "UTF-8"
+               }
+
   # Boiler plate.
   def self.defaults:Map
     array = SettingsStore.defaults
@@ -61,15 +67,24 @@ class AppSettingsStore < SettingsStore
     # mark it as "__EMPTY__" in this
     # array so the the store manager
     # has a complete list of keys to
-    # work with.
-
-    array.putAll({
-      "input_encoding"  => "UTF-8",
-      "output_encoding" => "UTF-8"
-    })
+    # work with.  IF YOU DON'T DO THIS
+    # YOUR DATA WILL GET FILTERED OUT
+    # BY THE ROOT DEFAULTS CLASS.  IT
+    # DROPS DATA FOR WHICH IT DOESN'T
+    # SEE A KNOWN KEY IN THE DEFAULTS
+    # ARRAY AS A SECURITY MEASURE!!!
+    array.putAll DEFAULTS
 
     return array
   end
+
+  # Boiler plate.
+  #protected
+  def collect_defaults:Map
+    array = super
+    array.putAll DEFAULTS
+    return array
+  end    
 
   # Boiler plate.
   #protected

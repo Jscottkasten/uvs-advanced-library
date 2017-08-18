@@ -81,6 +81,12 @@ class ParameterValidator < ParameterDefaults
   end
 
   #protected
+  def collect_defaults:Map
+    array = super
+    return array
+  end
+
+  #protected
   def disperse_parms:Map
     @parms = super
 

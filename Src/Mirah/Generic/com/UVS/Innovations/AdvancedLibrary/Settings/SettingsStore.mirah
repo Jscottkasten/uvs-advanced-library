@@ -66,6 +66,11 @@ class SettingsStore < ParameterDefaults
   end
 
   #protected
+  def collect_defaults:Map
+    return super
+  end
+
+  #protected
   def disperse_parms:Map
     @parms     = super
     @singleton = SettingsStoreSingleton.get_reference @parms

@@ -52,6 +52,11 @@ class ParameterDefaults
   end
 
   #protected
+  def collect_defaults:Map
+    return {}
+  end
+
+  #protected
   def disperse_parms:Map
     # This is useful for debugging as all derived classes
     # are tagged with their actual names which can be
@@ -69,12 +74,12 @@ class ParameterDefaults
   # defaults, then override it with the input
   # parameters one by one.
   def initialize
-    @parms = self.defaults
+    @parms = self.collect_defaults
     self.disperse_parms
   end
 
   def initialize (parms:Map)
-    filter    = self.defaults
+    filter    = self.collect_defaults
     filter.keySet.each do |key|
       filter[key] = parms[key] if parms.containsKey(key)
     end
